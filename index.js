@@ -2,18 +2,17 @@ const restify = require("restify"),
       bunyan = require("bunyan"),
       cfg = require("node-config-manager");
 
-const forecast = require("./model/forecast");
+const Forecast = require("./model/forecast");
 
-const cfgServer = cfg
-          .addConfig("server")
-          .getConfig("server");
-var server;
+var server,
+    serviceName = process.env["SERVICE_NAME"] || "clime",
+    servicePort = process.env["PORT"] || 8000;
 
-server = restify.createServer({name: cfgServer.name});
-server.listen(cfgServer.port);
-console.log(JSON.stringify({
-    msg: `Server listens on port ${cfgServer.port}`
-}));
+server = restify.createServer({name: serviceName});
+server.listen(servicePort);
+console.log( JSON.stringify({
+    msg: `Server listens on port ${servicePort}`
+}) );
 
 server.pre(restify.pre.userAgentConnection());
 server.use(restify.bodyParser());
@@ -28,14 +27,12 @@ server.use(restify.bodyParser());
     }));
 });
 
-server.get("/v1/health", (req, res, next) => {
+server.get("/health", (req, res, next) => {
     res.send(200);
     next();
 });
 
-server.get("/v1/clime", (req, res, next) => {
-    res.send({
-        when: 0,
-        clime: "lluvioso"
-    });
+server.get("/v1/clime/:year", (req, res, next) => {
+    res.send(Forecast.clime(req.params.year));
+    next();
 });

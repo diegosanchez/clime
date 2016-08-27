@@ -4,8 +4,8 @@
   "description": "ML exercise",
   "main": "index.js",
   "scripts": {
-      "test": "mocha",
-      "start": "node index"
+    "test": "mocha",
+    "start": "node index"
   },
   "keywords": [
     "exercise",
@@ -17,6 +17,8 @@
   "dependencies": {
     "bunyan": "^1.8.1",
     "node-config-manager": "^1.0.4",
-    "restify": "^4.1.1"
+    "point-in-polygon": "^1.0.1",
+    "restify": "^4.1.1",
+    "sylvester": "0.0.21"
   }
 }
