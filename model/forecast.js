@@ -1,39 +1,52 @@
-const Sylvester = require("sylvester");
+const Sylvester = require("sylvester"),
+      Vec2 = require("vec2"),
+      Polygon = require('polygon');
 
 const Planets = {
     planets: {
         ferengi: {
-            orbitRadio: 500,
-            speed: 1.0
+            orbitRadio: 500.0,
+            speed: -1.0
         },
         betasoide: {
-            orbitRadio: 2000,
-            speed: 3.0
+            orbitRadio: 2000.0,
+            speed: -3.0
         },
         vulcano: {
-            orbitRadio: 1000,
-            speed: -5.0
+            orbitRadio: 1000.0,
+            speed: 5.0
         }
     },
 
     where: function(planetName, day) {
         const planet = this.planets[planetName];
         return {
-            x: planet.orbitRadio * Math.round( Math.cos( planet.speed * day * Math.PI / 180.0 ) ),
-            y: planet.orbitRadio * Math.round( Math.sin( planet.speed * day * Math.PI / 180.0 ) )
+            x: (planet.orbitRadio * Math.cos( planet.speed * day * Math.PI / 180.0 )).toFixed(2),
+            y: (planet.orbitRadio * Math.sin( planet.speed * day * Math.PI / 180.0 )).toFixed(2)
         };
     }
 };
 module.exports = {
-    sameLine: function(planetPos) {
+    planetLine: function(planetPos) {
         const nearest = planetPos.find( (p) => p.name === "ferengi"),
-              further = planetPos.find( (p) => p.name === "betasoide"),
+              further = planetPos.find( (p) => p.name === "betasoide");
+        return Sylvester.Line.create( [nearest.x, nearest.y], [further.x, further.y]);
+    },
+
+    sameLine: function(planetPos) {
+        const line = this.planetLine(planetPos),
               remain = planetPos.find( (p) => p.name === "vulcano"),
               sun = { x: 0, y: 0, name: "sun"};
 
-        const line = Sylvester.Line.create( [nearest.x, nearest.y], [further.x, further.y]);
-
         return ![remain, sun].some( (p) => !line.contains([p.x, p.y]) );
+    },
+
+    sunInsidePoligon: function(planetPos) {
+        const polygon = new Polygon( planetPos.map( (p) => [p.x, p.y]) );
+        return {
+            area: Math.abs(polygon.area()),
+            contains: polygon.containsPoint( new Vec2(0,0) )
+        };
     },
 
     planetPositions: function(day) {
@@ -47,14 +60,19 @@ module.exports = {
     },
 
     clime: function(day) {
-        const response = { dia: day },
-              planetPositions = this.planetPositions( Number.parseInt(day) );
+        const planetPositions = this.planetPositions( Number.parseInt(day) ),
+              response = {
+                  dia: day,
+                  clima: "normal"
+              };
 
         if ( this.sameLine(planetPositions) ) {
             response.clima = "sequia";
+        } else if ( this.sunInsidePoligon(planetPositions).contains ) {
+            response.clima = "lluvia";
+            response.peak = [ 84, 96 ].some( (n) => n === day);
         }
 
-        response.metadata = planetPositions;
         return response;
     }
 };

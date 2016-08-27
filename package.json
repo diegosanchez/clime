@@ -17,9 +17,10 @@
   "dependencies": {
     "bunyan": "^1.8.1",
     "node-config-manager": "^1.0.4",
-    "point-in-polygon": "^1.0.1",
+    "polygon": "^1.0.2",
     "restify": "^4.1.1",
-    "sylvester": "0.0.21"
+    "sylvester": "0.0.21",
+    "vec2": "^1.6.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
