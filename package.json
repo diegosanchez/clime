@@ -20,5 +20,9 @@
     "point-in-polygon": "^1.0.1",
     "restify": "^4.1.1",
     "sylvester": "0.0.21"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.0.2"
   }
 }
