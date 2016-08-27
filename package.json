@@ -1,0 +1,21 @@
+{
+  "name": "clima",
+  "version": "0.0.1",
+  "description": "ML exercise",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "exercise",
+    "weather",
+    "heroku"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bunyan": "^1.8.1",
+    "node-config-manager": "^1.0.4",
+    "restify": "^4.1.1"
+  }
+}
