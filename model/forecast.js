@@ -60,7 +60,8 @@ module.exports = {
     },
 
     clime: function(day) {
-        const planetPositions = this.planetPositions( Number.parseInt(day) ),
+        day = Number.parseInt(day);
+        const planetPositions = this.planetPositions( day ),
               response = {
                   dia: day,
                   clima: "normal"
@@ -70,7 +71,7 @@ module.exports = {
             response.clima = "sequia";
         } else if ( this.sunInsidePoligon(planetPositions).contains ) {
             response.clima = "lluvia";
-            response.peak = [ 84, 96 ].some( (n) => n === day);
+            response.pico = [ 84, 96 ].some( (n) => n === day);
         }
 
         return response;

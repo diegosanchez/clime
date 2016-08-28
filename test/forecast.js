@@ -38,7 +38,7 @@ describe("forecast", () => {
                 chai.expect(value).to.deep.equal({
                     dia: d,
                     clima: "lluvia",
-                    peak: true
+                    pico: true
                 });
             });
         });
@@ -49,7 +49,7 @@ describe("forecast", () => {
                 chai.expect(value).to.deep.equal({
                     dia: d,
                     clima: "lluvia",
-                    peak: false
+                    pico: false
                 });
             });
         });
