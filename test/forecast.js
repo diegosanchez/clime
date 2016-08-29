@@ -33,7 +33,7 @@ describe("forecast", () => {
 
     describe("rain", () => {
         it("should be rainy and it's the peak", () => {
-            [84, 96].forEach( (d) => {
+            [84, 96, 264, 276].forEach( (d) => {
                 const value = Forecast.clime(d);
                 chai.expect(value).to.deep.equal({
                     dia: d,

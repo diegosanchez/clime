@@ -71,7 +71,7 @@ module.exports = {
             response.clima = "sequia";
         } else if ( this.sunInsidePoligon(planetPositions).contains ) {
             response.clima = "lluvia";
-            response.pico = [ 84, 96 ].some( (n) => n === day);
+            response.pico = [ 84, 96, 264, 276 ].some( (n) => n === day);
         }
 
         return response;
