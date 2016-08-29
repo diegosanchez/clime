@@ -32,7 +32,7 @@ server.get("/health", (req, res, next) => {
     next();
 });
 
-server.get("/v1/clime/:year", (req, res, next) => {
+server.get("/v1/clima/:year", (req, res, next) => {
     res.send(Forecast.clime(req.params.year));
     next();
 });
